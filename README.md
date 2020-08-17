@@ -1,3 +1,3 @@
 # SAT-project
 data structure project
-belong to CS1806 U201814658 范攀
+belongs to CS1806 U201814658 范攀, 2020.2.20
