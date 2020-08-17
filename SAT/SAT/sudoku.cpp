@@ -51,7 +51,7 @@ BT* ReadBP(void)
 FILE* SUDOCNF(void)
 {
 	FILE* fp;
-	if ((fp = fopen("D:/sudo.cnf", "w")) == NULL)       //将储存结构中内容输出到log.txt
+	if ((fp = fopen("D:\SAT\sudo.cnf", "w")) == NULL)       //将储存结构中内容输出到log.txt
 	{
 		printf("文件打开失败！\n");
 		return  NULL;
@@ -357,7 +357,7 @@ FILE* Limit3(FILE* fp)
 void PrintSudo(BT*bt)
 {
 	FILE* fp;
-	if ((fp = fopen("D:/result.txt", "r")) == NULL)
+	if ((fp = fopen("D:/SAT/result.txt", "r")) == NULL)
 	{
 		printf("文件打开失败！\n");
 		//文件打开失败，返回ERROR

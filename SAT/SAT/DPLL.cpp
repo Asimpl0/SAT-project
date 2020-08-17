@@ -151,7 +151,7 @@ CNF* CreatCNF(void)
 status SaveList(CNF* root)
 {
 	FILE* fp;
-	if ((fp = fopen("D:/log.txt", "w")) == NULL)       //将储存结构中内容输出到log.txt
+	if ((fp = fopen("D:/SAT/log.txt", "w")) == NULL)       //将储存结构中内容输出到log.txt
 	{
 		printf("文件打开失败！\n");
 		return  ERROR;
@@ -399,7 +399,7 @@ CNF* AddClause(CNF* root, int v)
 status SaveResult(result* root_value)
 {
 	FILE* fp;
-	if ((fp = fopen("D:/result.txt", "w")) == NULL)       //将储存结构中内容输出到log.txt
+	if ((fp = fopen("D:/SAT/result.txt", "w")) == NULL)       //将储存结构中内容输出到log.txt
 	{
 		printf("文件打开失败！\n");
 		return  ERROR;
