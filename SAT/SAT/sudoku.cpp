@@ -12,6 +12,7 @@ int bpnum = 0;
 **************************/
 BT* ReadBP(void)
 {
+	bpnum = 0;
 	printf("请输入要读入的数独棋盘\n");
 	char name[20];
 	FILE* fp;
@@ -38,7 +39,18 @@ BT* ReadBP(void)
 			if (pre[0] == '.') bt->sudo[i][j] = -1;
 		}
 	}
-
+	fclose(fp);
+	printf("\n读入的棋盘为：\n\n");
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 6; j++) {
+			if (bt->sudo[i][j] != -1)
+				printf("%d ", bt->sudo[i][j]);
+			else
+				printf("* ");
+		}
+		printf("\n");
+	}
+	printf("\n\n正在进行求解~\n\n");
 	return bt;
 }
 
@@ -51,7 +63,7 @@ BT* ReadBP(void)
 FILE* SUDOCNF(void)
 {
 	FILE* fp;
-	if ((fp = fopen("D:\SAT\sudo.cnf", "w")) == NULL)       //将储存结构中内容输出到log.txt
+	if ((fp = fopen("D:/SAT/sudo.cnf", "w")) == NULL)       //将储存结构中内容输出到log.txt
 	{
 		printf("文件打开失败！\n");
 		return  NULL;
@@ -374,6 +386,8 @@ void PrintSudo(BT*bt)
 		i = (argu - 1 - j) / 6;
 		bt->sudo[i][j] = status;
 	}
+
+	fclose(fp);
 	//用于测试是否读入正确
 	printf("\nSAT求解如下：\n\n");
 	for (i = 0; i < 6; i++) {

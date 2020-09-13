@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "malloc.h"
 #include "stdlib.h"
-#include"time.h"
+#include "time.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -72,6 +72,7 @@ void RemoveArgu(CNF* root, int argu);
 status ISEmptyClause(CNF* root);
 int FindMost(result* root_value);
 void SortResult(result* root_value);
+//void SortResult(result* root_value, int low, int high);
 CNF* AddClause(CNF* root, int v);
 status SaveResult(result* root_value);
 CNF* CopyRoot(CNF* root);
@@ -83,3 +84,4 @@ FILE* Limit1(FILE* fp);
 FILE* Limit2(FILE* fp);
 FILE* Limit3(FILE* fp);
 void PrintSudo(BT* bt);
+void SortOut(result* root_value);

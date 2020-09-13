@@ -101,7 +101,7 @@ status LoadCNF(CNF*root,result *root_value, FILE*fp)
 	int addnum;    //用来标记变元个数
 
 
-	//读入除第一行外其他行,共有ClauseNum-1行
+	//读入行,共有ClauseNum行
 	for (i = 0; i < ClauseNum; i++) {    //一行一行读入，每行读入利用循环
 		//先生成C1,  C2，C3.......
 		addnum = 0;   //计数变量重置为0
@@ -126,6 +126,7 @@ status LoadCNF(CNF*root,result *root_value, FILE*fp)
 		nextclause->clause_next = (Clause*)malloc(sizeof(Clause));
 		nextclause = nextclause->clause_next;
 	}
+	fclose(fp);
 	return OK;
 
 }
@@ -172,6 +173,7 @@ status SaveList(CNF* root)
 		nextclause = nextclause->clause_next;
 		fprintf(fp,"\n");
 	}
+	fclose(fp);
 	return OK;
 }
 
@@ -334,16 +336,49 @@ status ISEmptyClause(CNF* root)
 *输入值：root_value
 *返回值：无
 ****************************/
+//void SortResult(result* root_value, int low, int high)
+//{
+//	int first = low;
+//	int last = high;
+//	root_value->value[0] = root_value->value[first];
+//
+//	if (low >= high)
+//		return;
+//
+//	while (first<last)
+//	{
+//		
+//
+//		while (first < last && root_value->value[last].num >= root_value->value[0].num) {
+//			last--;
+//		}
+//		root_value->value[first] = root_value->value[last];
+//
+//		while (first < last && root_value->value[last].num <= root_value->value[0].num) {
+//			first++;
+//		}
+//		root_value->value[last] = root_value->value[first];
+//
+//	}
+//
+//	root_value->value[first] = root_value->value[0];
+//
+//	SortResult(root_value, low, first - 1);
+//	SortResult(root_value, first + 1, high);
+//}
+
+
+
 void SortResult(result* root_value)
 {
 	int i, j;
 
-	//为了方便起见，先将变元按频数大小降序排序，排序算法采用冒泡法
+	//为了方便起见，先将变元按频数大小降序排序，排序算法采用冒泡排序算法
 	for (j = 1; j <= root_value->argunum; j++) {
 		for (i = 1; i <= root_value->argunum; i++) {
 			if (root_value->value[i].num < root_value->value[i + 1].num)
 			{
-				root_value->value[0] = root_value->value[i + 1];
+			root_value->value[0] = root_value->value[i + 1];
 				root_value->value[i + 1] = root_value->value[i];
 				root_value->value[i] = root_value->value[0];
 			}
@@ -351,6 +386,28 @@ void SortResult(result* root_value)
 	}
 }
 
+/*******************************
+*函数名称：SortOut
+*函数作用：将result中变元按顺序排序
+*输入值：root_value
+*返回值：无
+****************************/
+void SortOut(result* root_value)
+{
+	int i, j;
+
+	//为了方便起见，先将变元按频数大小降序排序，排序算法采用冒泡排序算法
+	for (j = 1; j <= root_value->argunum; j++) {
+		for (i = 1; i <= root_value->argunum; i++) {
+			if (root_value->value[i].argu > root_value->value[i + 1].argu)
+			{
+				root_value->value[0] = root_value->value[i];
+				root_value->value[i] = root_value->value[i+1];
+				root_value->value[i+1] = root_value->value[0];
+			}
+		}
+	}
+}
 
 /*****************************
 *函数名称：FindMost
@@ -408,9 +465,11 @@ status SaveResult(result* root_value)
 	fprintf(fp, "%d\n", root_value->argunum);    //输出变元个数
 	int i;
 	for (i = 1; i <=root_value->argunum; i++) {
-		fprintf(fp, "%d       %d", root_value->value[i].argu,  root_value->value[i].status);
+		
+		fprintf(fp, "%d       %d",root_value->value[i].argu,  root_value->value[i].status);
 		fprintf(fp, "\n");
 	}
+	fclose(fp);
 	return OK;
 }
 
